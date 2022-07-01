@@ -20,9 +20,9 @@ class optParser():
             self.option, self.args = parser.parse_args()
 
 if __name__ == '__main__':
-    #opts = optParser('')
-    fakeArgs = "-f bace_run1_0_with_w -r 3A -e -8.83 -w bar"  # only keep this for test purpose
-    opts = optParser(fakeArgs.strip().split())  # only keep this for test purpose
+    opts = optParser('')
+    #fakeArgs = "-f bace_run1_0_with_w -r 3A -e -8.83 -w bar"  # only keep this for test purpose
+    #opts = optParser(fakeArgs.strip().split())  # only keep this for test purpose
     g = Graph(opts.option.file, opts.option.weight)
     g.getAllCyles()
     if len(g.cycles)== 0:
