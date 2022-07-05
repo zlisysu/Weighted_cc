@@ -20,15 +20,21 @@ class Graph:
         self.print_e = defaultdict(decimal.Decimal)
         if filename is not None:
             fp=open(filename)
-            for line in fp:
-                data = line.strip().split()
-                if len(data)==3:
-                    weight="no"
-                if len(data)<3:
-                    raise Exception("input error")
-                    exit()
-                self.addEdge(data,weight)
-                self.num_e += 1
+            try:
+                for line in fp:
+                    data = line.strip().split()
+                    if len(data)==3:
+                        if weight!="no":
+                            print("No weight in your input. Change \"weight\" to \"no\"")
+                        weight="no"
+                    if len(data)<3:
+                        raise Exception("input error")
+                        exit()
+                    self.addEdge(data,weight)
+                    self.num_e += 1
+            finally:
+                fp.close()
+                Exception("Illegal input! Please check your input file.")
         else:
             print("Error: No input files")
             exit()
@@ -159,20 +165,22 @@ class Graph:
                     self.ddG_save[curr_key] = self.ddG_cc[curr_key][n]
                 self.CycleClosure(n,cal_error)
                 i += 1
+        for molpair in self.print_e:
+            self.nodelist.append([molpair[0], molpair[1], self.err[molpair]])
 
     def printEnePairs(self):
+        print("*" * 100)
         print("Printing Pairwise Energies:")
-        print('{:^4s} {:13s}'.format('Pair', 'orig_cc_Energy'),end='')
+        print('{:8s} {:9s}'.format('Pair', 'ddG_cc'),end='')
         for k in range(1,self.weight_num):
             print(' {:^8s}'.format("wcc"+str(k)),end='')
         print(' {:^8s}'.format('cc_error'))
         for molpair in self.print_e:
-            #print("%s-%s\t%10.2f\t\t%10.2f" % (molpair[0], molpair[1], self.ddG_cc[molpair][0],self.err[molpair].quantize(decimal.Decimal('0.00'))),end='')
             print('{:>2s}-{:2s}{:^14.4f}'.format(molpair[0],molpair[1], self.ddG_cc[molpair][0],),end='')
             for k in range(1,self.weight_num):
                 print(" {:^8.4f}".format(self.ddG_cc[molpair][k]),end="")
             print('{:^10.4f}'.format(self.err[molpair].quantize(decimal.Decimal('0.00'))))
-            self.nodelist.append([molpair[0], molpair[1], self.err[molpair]])
+            #self.nodelist.append([molpair[0], molpair[1], self.err[molpair]])
 
 
 
