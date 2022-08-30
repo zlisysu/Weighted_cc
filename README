@@ -1,61 +1,71 @@
-Please ensure that your input file contains at least three columns: two for mutation ligands and their pair-wise energy.
+This program can be easily used to calculate the weighted cycle closure energy for FEP-RBFE calculation.
 
-If you want obtain more rigorous cycle closure error, please list std calculated by BAR as the 4th column in your input file. When you do not want BAR_std as your cc weight, please set "-w  no", otherwise you can set " -w bar" (btw, please make sure BAR_std is in the 4th column as long as you give this value).
+Each line of the input file stands for the relative binding free energy result for a pair of molecules.
+Each line should contain the names of the two molecules, their relative binding free energy, and the statistical error for this calculation (optional).
 
-Example-1: 
-input file:
-lig1  lig2  ene  bar_std
 
-instrution: 
-python wcc_main.py -f input_file -r lig_ref -e ref_ene(int) -w no
-
-output: 
-Printing Pairwise Energies:
-Pair orig_cc_Energy cc_error
-a-b     xxxxxx       xxxxx
-...	......	     .....
+Example-1:
+If the statistical errors are not provided, the weight for all mutation paths are considered to be the same. In this case, the weighted cycle closure will give the same results with the original cycle closure method.
+-r and -e options can be used to set the reference ligand (default: the first ligand) and its absolute binding free energy (default: 0 kcal/mol). The weighted cycle closure free energies for other ligands will be calcualted based on the reference ligand.
+Input file:
+lig1  lig2  ddG  
+L1    L2    1.35
+L2    L3    0.26
+L3    L1   -1.02
+....
+Run command:
+python wcc_main.py -f input_file [-r lig_ref] [-e ref_ene(int)]
+Output:
+Pair      ddG_cc     cc_error
+L1-L2     xxx        xxx
+.........
 ************************************************************************
-Node    dG_cc     cc_ref_error no_ref_error
-a	xxx		xx	  xx
-b	xxx		xx        xx
+Ligand    dG_cc     cc_path_dependent_error   cc_path_independent_error
+L1	       xxx		     xx	                       xx
+L2	       xxx		     xx                        xx
 ...	...		...	 ....
 
-Example-2: 
-input file:
-lig1  lig2  ene  bar_std
 
-instrution: 
-python wcc_main.py -f input_file -r lig_ref -e ref_ene(int) -w bar
+
+Example-2: 
+If the statistical errors are available, they can be put in the 4th column. The program will give weighted cycle closure results based on the statistical errors.
+
+input file:
+lig1  lig2  ddG  std
+
+Run command:
+python wcc_main.py -f input_file -r lig_ref -e ref_ene(int)
 
 output: 
 Printing Pairwise Energies:
-Pair orig_cc_Energy   wcc1     cc_error
-a-b     xxxxxx       xxxxx      xxxxx
-...	......	     .....      .....
+Pair    ddG_cc   ddG_wcc1     cc_error
+a-b     xxxxxx   xxxxx        xxxxx
+...	    ......	  .....        .....
 ************************************************************************
-Node    dG_cc   dG_wcc1  cc_ref_error no_ref_error
-a	xxx	  xx	    xx	         xx
-b	xxx	  xx	    xx           xx
+Ligand  dG_cc   dG_wcc1  cc_path_dependent_error   cc_path_independent_error
+a	      xxx	    xx	      xx	                       xx
+b	      xxx	    xx	      xx                        xx
 ...	...	 ...	    ...	         ....
  
 
 
-If you give an input file contains several weights(without BAR_std), please do not set "-w", the program could calculate predictions with different weights respectively.
+
 
 Example-3: 
+If you give an input file contains statistical errors calculated by different methods, the program will calculate weighted cycle closure results with different weights respectively.
 input file:
-lig1  lig2  ene  w1 w2 w3
+lig1  lig2  ddG  std1 std2 std3
 
 instrution: 
 python wcc_main.py -f input_file -r lig_ref -e ref_ene(int) 
 
 output: 
 Printing Pairwise Energies:
-Pair orig_cc_Energy   wcc1     wcc2      wcc3    cc_error
-a-b     xxxxxx       xxxxx     xxxxx	xxxxx	xxxxx
+Pair    ddG_cc   ddG_wcc1  ddG_wcc2    ddG_wcc3    cc_error
+a-b     xxxxxx   xxxxx     xxxxx     	 xxxxx	      xxxxx
 ...	......	     .....     .....    .....   .....
 ************************************************************************
-Node    dG_cc       dG_wcc1      dG_wcc2      dG_wcc3    cc_ref_error no_ref_error
-a	xxx	     xx	           xx	         xx           xx          xx
-b	xxx	     xx	           xx	         xx           xx          xx
+Ligand     dG_cc       dG_wcc1      dG_wcc2      dG_wcc3    cc_path_dependent_error   cc_path_independent_error
+a	         xxx	        xx	           xx	         xx           xx                      xx
+b	         xxx	        xx	           xx	         xx           xx                      xx
 ...	...	     ...	  ....	        ....         ....        ....
