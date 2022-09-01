@@ -1,71 +1,40 @@
-This program can be easily used to calculate the weighted cycle closure energy for FEP-RBFE calculation.
+Please ensure that your input file contains at least three columns: two for mutation ligands and their pair-wise energy.
 
-Each line of the input file stands for the relative binding free energy result for a pair of molecules.
-Each line should contain the names of the two molecules, their relative binding free energy, and the statistical error for this calculation (optional).
+If you want obtain more rigorous cycle closure error, please list std calculated by BAR as the 4th column in your input file. 
 
-
-Example-1:
-If the statistical errors are not provided, the weight for all mutation paths are considered to be the same. In this case, the weighted cycle closure will give the same results with the original cycle closure method.
--r and -e options can be used to set the reference ligand (default: the first ligand) and its absolute binding free energy (default: 0 kcal/mol). The weighted cycle closure free energies for other ligands will be calcualted based on the reference ligand.
-Input file:
-lig1  lig2  ddG  
-L1    L2    1.35
-L2    L3    0.26
-L3    L1   -1.02
-....
-Run command:
-python wcc_main.py -f input_file [-r lig_ref] [-e ref_ene(int)]
-Output:
-Pair      ddG_cc     cc_error
-L1-L2     xxx        xxx
-.........
-************************************************************************
-Ligand    dG_cc     cc_path_dependent_error   cc_path_independent_error
-L1	       xxx		     xx	                       xx
-L2	       xxx		     xx                        xx
-...	...		...	 ....
+Example:
 
 
 
-Example-2: 
-If the statistical errors are available, they can be put in the 4th column. The program will give weighted cycle closure results based on the statistical errors.
+1. Example with only three data columns: ligand1, ligand2 and pair-wise energy(Shown as Example/example_without_w)
 
-input file:
-lig1  lig2  ddG  std
-
-Run command:
-python wcc_main.py -f input_file -r lig_ref -e ref_ene(int)
+Usage:
+python wcc_main.py -f Example/example_without_w -r 1d -e -9.52
 
 output: 
-Printing Pairwise Energies:
-Pair    ddG_cc   ddG_wcc1     cc_error
-a-b     xxxxxx   xxxxx        xxxxx
-...	    ......	  .....        .....
-************************************************************************
-Ligand  dG_cc   dG_wcc1  cc_path_dependent_error   cc_path_independent_error
-a	      xxx	    xx	      xx	                       xx
-b	      xxx	    xx	      xx                        xx
-...	...	 ...	    ...	         ....
+Node    dG_cc     cc_ref_error no_ref_error
+ 1d    -9.5200       0.0000       0.7335   
+ 6e    -9.7275       0.8600       0.7335   
+  .	      .		     	.			 .
+  .       .             .            .    
+  .       .             .            . 
+ 6b    -10.6310      1.2100       0.7335   
+
+2. Example with five data columns: ligand1, ligand2, pair-wise energy, bar_std, slide_std(Shown as Example/example_with_w)
+
+Usage:
+python wcc_main.py -f Example/example_with_w -r 1d -e -9.52
+
+output: 
+Node    dG_cc       dG_wcc1      dG_wcc2    cc_ref_error no_ref_error
+ 1d    -9.5200      -9.5200      -9.5200       0.0000       0.7335   
+ 6e    -9.7275      -10.6095     -9.5864       0.8600       0.7335   
+  .	      .		     	.			 .			  .			   .
+  .       .             .            .    		  .			   .
+  .       .             .            . 			  .            .
+ 6b    -10.6310     -11.2172     -10.4665      1.2100       0.7335   
+
  
 
 
-
-
-Example-3: 
-If you give an input file contains statistical errors calculated by different methods, the program will calculate weighted cycle closure results with different weights respectively.
-input file:
-lig1  lig2  ddG  std1 std2 std3
-
-instrution: 
-python wcc_main.py -f input_file -r lig_ref -e ref_ene(int) 
-
-output: 
-Printing Pairwise Energies:
-Pair    ddG_cc   ddG_wcc1  ddG_wcc2    ddG_wcc3    cc_error
-a-b     xxxxxx   xxxxx     xxxxx     	 xxxxx	      xxxxx
-...	......	     .....     .....    .....   .....
-************************************************************************
-Ligand     dG_cc       dG_wcc1      dG_wcc2      dG_wcc3    cc_path_dependent_error   cc_path_independent_error
-a	         xxx	        xx	           xx	         xx           xx                      xx
-b	         xxx	        xx	           xx	         xx           xx                      xx
-...	...	     ...	  ....	        ....         ....        ....
+If you want obtain pair-wise results after calculation, add "-p yes" in instruction.

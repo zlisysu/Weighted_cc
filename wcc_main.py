@@ -12,8 +12,8 @@ class optParser():
                           default='')
         parser.add_option('-e', '--ref_ene', dest='ref_ene', help='Energy for the reference molecule. Default: 0.00',
                           default=0.00, type=float)
-        parser.add_option('-w', '--weight', dest='weight', help='Weight option: no(original cycle closure), bar(if weights contained bennett_std). Default: 0',
-                          default="no")
+        # parser.add_option('-w', '--weight', dest='weight', help='Weight option: no(original cycle closure), bar(if weights contained bennett_std). Default: 0',
+        #                   default="no")
         parser.add_option('-p', '--print', dest='print', help='Print option: no(Only print molecule energy), yes(print pair-wise energy and molecule energy). Default: no',
                           default="no")
         if fakeArgs:
@@ -23,11 +23,11 @@ class optParser():
 
 if __name__ == '__main__':
     opts = optParser('')
-    # fakeArgs = "-f bace_run1_0_with_w -r 3A -e -8.83 -w bar -p yes"  # only keep this for test purpose
+    # fakeArgs = "-f bace_run1_0_with_w -r 3A -e -8.83 -p yes"  # only keep this for test purpose
     # opts = optParser(fakeArgs.strip().split())  # only keep this for test purpose
     if not opts.option.file:
         raise Exception("No input energy data!")
-    g = Graph(opts.option.file, opts.option.weight)
+    g = Graph(opts.option.file)
     g.getAllCyles()
     if len(g.cycles)== 0:
         print("No cycle in this graph.")

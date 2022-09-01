@@ -63,8 +63,6 @@ def calcMolEnes(ref_ene,graph,path):
     return mol_ene
 
 def printMol(nodes,mol_ene,node_err,no_ref_error):
-
-    print("*"*100)
     print('{:^4s} {:^12s}'.format('Node', 'dG_cc'), end='')
     for k in range(1,len(mol_ene)):
         print(' {:^12s}'.format("dG_wcc" + str(k)), end='')
