@@ -1,12 +1,10 @@
-Please ensure that your input file contains at least three columns: two for mutation ligands and their pair-wise energy.
+Please ensure that your input file contains at least three columns: The first two columns are the names of the mutation ligands, and the third colunm are their pair-wise energy. 
 
-If you want obtain more rigorous cycle closure error, please list std calculated by BAR as the 4th column in your input file. 
 
 Example:
 
 
-
-1. Example with only three data columns: ligand1, ligand2 and pair-wise energy(Shown as Example/example_without_w)
+1. Example with only three data columns: ligand1, ligand2 and pair-wise energy(Input file: Example/example_without_w).
 
 Usage:
 python wcc_main.py -f Example/example_without_w -r 1d -e -9.52
@@ -20,7 +18,7 @@ Node    dG_cc     cc_ref_error no_ref_error
   .       .             .            . 
  6b    -10.6310      1.2100       0.7335   
 
-2. Example with five data columns: ligand1, ligand2, pair-wise energy, bar_std, slide_std(Shown as Example/example_with_w)
+2. Example with five data columns: ligand1, ligand2, pair-wise energy, bar_std, slide_std(Input file: Example/example_with_w)
 
 Usage:
 python wcc_main.py -f Example/example_with_w -r 1d -e -9.52
