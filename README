@@ -7,32 +7,30 @@ Example:
 1. Example with only three data columns: ligand1, ligand2 and pair-wise energy(Input file: Example/example_without_w).
 
 Usage:
-python wcc_main.py -f Example/example_without_w -r 1d -e -9.52
+python wcc_main.py -f Example/example_without_w -r 3A -e -8.83
 
 output: 
 Node    dG_cc     cc_ref_error no_ref_error
- 1d    -9.5200       0.0000       0.7335   
- 6e    -9.7275       0.8600       0.7335   
-  .	      .		     	.			 .
+ 3K    -9.6490       0.6800       0.3917
+ 4M    -9.2534       0.6800       0.3917
+  .       .             .            .    
   .       .             .            .    
   .       .             .            . 
- 6b    -10.6310      1.2100       0.7335   
+ 4I    -7.7850       0.6800       0.2542
 
 2. Example with five data columns: ligand1, ligand2, pair-wise energy, bar_std, slide_std(Input file: Example/example_with_w)
 
 Usage:
-python wcc_main.py -f Example/example_with_w -r 1d -e -9.52
+python wcc_main.py -f Example/example_with_w -r 3A -e -8.83
 
 output: 
 Node    dG_cc       dG_wcc1      dG_wcc2    cc_ref_error no_ref_error
- 1d    -9.5200      -9.5200      -9.5200       0.0000       0.7335   
- 6e    -9.7275      -10.6095     -9.5864       0.8600       0.7335   
-  .	      .		     	.			 .			  .			   .
-  .       .             .            .    		  .			   .
-  .       .             .            . 			  .            .
- 6b    -10.6310     -11.2172     -10.4665      1.2100       0.7335   
-
- 
+ 3K    -9.6490      -9.8057      -9.9030       0.6800       0.3917
+ 4M    -9.2534      -9.1101      -9.1422       0.6800       0.3917
+  .       .             .           .             .            .
+  .       .             .           .             .            .
+  .       .             .           .             .            .
+ 4I    -7.7850      -7.8019      -7.9035       0.6800       0.2542
 
 
 If you want obtain pair-wise results after calculation, add "-p yes" in instruction.
