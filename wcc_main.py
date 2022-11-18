@@ -43,9 +43,9 @@ if __name__ == '__main__':
     except ValueError as e:
         print("Check your args. Ref",opts.option.ref,"isn't in your input file!")
         exit()
-    no_ref_error = lig.cal_node_noref_error(g.V, node_map)
-    ref_node_err, path = lig.cal_node_ref_error(ref_node, g.V, node_map)
+    path_independent_error = lig.cal_node_path_independent_error(g.V, node_map)
+    path_dependent_error, path = lig.cal_node_path_dependent_error(ref_node, g.V, node_map)
     mol_ene = lig.calcMolEnes(opts.option.ref_ene, g, path)
-    lig.printMol(g.V,mol_ene,ref_node_err,no_ref_error)
+    lig.printMol(g.V,mol_ene,path_dependent_error,path_independent_error)
 
 

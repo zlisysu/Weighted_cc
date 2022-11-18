@@ -11,12 +11,12 @@ def set_node_map(graph):
         node_map[graph.V.index(x)][graph.V.index(y)] = node_map[graph.V.index(y)][graph.V.index(x)] = decimal.Decimal(val ** 2)
     return  node_map
 
-def cal_node_noref_error(node,node_map):
+def cal_node_path_independent_error(node,node_map):
     node_rel=[[decimal.Decimal(-1) if (p==sys.maxsize) else p for p in n]for n in node_map]
     no_ref_error=[np.max(n) for n in node_rel]
     return no_ref_error
 
-def cal_node_ref_error(source,node,node_map):
+def cal_node_path_dependent_error(source,node,node_map):
     vertex_num=len(node)
     visited=[False for i in range(vertex_num)]
     visited[source]=True;
@@ -62,13 +62,13 @@ def calcMolEnes(ref_ene,graph,path):
                 mol_ene[k][m] -= float(curr_ene)###
     return mol_ene
 
-def printMol(nodes,mol_ene,node_err,no_ref_error):
+def printMol(nodes,mol_ene,path_dependent_error,path_independent_error):
     print('{:^4s} {:^12s}'.format('Node', 'dG_cc'), end='')
     for k in range(1,len(mol_ene)):
         print(' {:^12s}'.format("dG_wcc" + str(k)), end='')
-    print(' {:^12s} {:^12s}'.format('cc_ref_error','no_ref_error'))
+    print(' {:^25s} {:^25s}'.format('path_dependent_error','path_independent_error'))
     for i in range(len(nodes)):
         print("{:^4s} {:^12.4f}".format(nodes[i],mol_ene[0][i]),end='')
         for k in range(1, len(mol_ene)):
             print(' {:^12.4f}'.format(mol_ene[k][i]), end='')
-        print(' {:^12.4f} {:^12.4f}'.format(node_err[i].sqrt().quantize(decimal.Decimal('0.00')),no_ref_error[i]))
+        print(' {:^25.4f} {:^25.4f}'.format(path_dependent_error[i].sqrt().quantize(decimal.Decimal('0.00')),path_independent_error[i]))

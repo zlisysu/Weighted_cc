@@ -171,12 +171,12 @@ class Graph:
         print("Printing Pairwise Energies:")
         print('{:8s} {:10s}'.format('Pair', 'ddG_cc'),end='')
         for k in range(1,self.weight_num):
-            print(' {:^9s}'.format("ddG_wcc"+str(k)),end='')
-        print(' {:^8s}'.format('cc_error'))
+            print(' {:^10s}'.format("ddG_wcc"+str(k)),end='')
+        print(' {:^10s}'.format('pair_error'))
         for molpair in self.print_e:
             print('{:>2s}-{:2s}{:^14.4f}'.format(molpair[0],molpair[1], self.ddG_cc[molpair][0],),end='')
             for k in range(1,self.weight_num):
-                print(" {:^8.4f}".format(self.ddG_cc[molpair][k]),end="")
+                print(" {:^10.4f}".format(self.ddG_cc[molpair][k]),end="")
             print('{:^10.4f}'.format(self.err[molpair].quantize(decimal.Decimal('0.00'))))
             #self.nodelist.append([molpair[0], molpair[1], self.err[molpair]])
         print("*" * 100)
