@@ -75,5 +75,5 @@ Node    dG_cc       dG_wcc1      dG_wcc2      path_dependent_error     path_inde
 
 References
 ----------
-Li, Yishui & Liu, Runduo & Liu, Jie & Luo, Haibin & Wu, Chengkun & Li, Zhe. (2022). An Open Source Graph-Based Weighted Cycle Closure Method for Relative Binding Free Energy Calculations. Journal of Chemical Information and Modeling. 
+Li, Yishui & Liu, Runduo & Liu, Jie & Luo, Haibin & Wu, Chengkun & Li, Zhe. An Open Source Graph-Based Weighted Cycle Closure Method for Relative Binding Free Energy Calculations. Journal of Chemical Information and Modeling. 2023, 63, 2, 561–570
 Refer to the publication above for a detailed description of the wcc method and the parameters  and please cite it to support our work if you use this software in your research.
