@@ -177,7 +177,7 @@ class Graph:
             print('{:>2s}-{:2s}{:^14.4f}'.format(molpair[0],molpair[1], self.ddG_cc[molpair][0],),end='')
             for k in range(1,self.weight_num):
                 print(" {:^10.4f}".format(self.ddG_cc[molpair][k]),end="")
-            print('{:^10.4f}'.format(self.err[molpair].quantize(decimal.Decimal('0.00'))))
+            print('{:^10.4f}'.format(decimal.Decimal(self.err[molpair]).quantize(decimal.Decimal('0.00'))))
             #self.nodelist.append([molpair[0], molpair[1], self.err[molpair]])
         print("*" * 100)
 
