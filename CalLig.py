@@ -71,4 +71,4 @@ def printMol(nodes,mol_ene,path_dependent_error,path_independent_error):
         print("{:^4s} {:^12.4f}".format(nodes[i],mol_ene[0][i]),end='')
         for k in range(1, len(mol_ene)):
             print(' {:^12.4f}'.format(mol_ene[k][i]), end='')
-        print(' {:^25.4f} {:^25.4f}'.format(path_dependent_error[i].sqrt().quantize(decimal.Decimal('0.00')),path_independent_error[i]))
+        print(' {:^25.4f} {:^25.4f}'.format(path_dependent_error[i].sqrt().quantize(decimal.Decimal('0.00')),path_independent_error[i].sqrt().quantize(decimal.Decimal('0.00'))))
